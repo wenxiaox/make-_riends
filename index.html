@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 专门适配微信公众号打开 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>交友盲盒</title>
+    <style>
+        body{background:#fff0f4;margin:0;padding:20px;}
+        .box{max-width:380px;margin:0 auto;background:#fff;border-radius:20px;padding:30px;text-align:center;}
+        h2{color:#e85080;}
+        .qr{width:220px;border-radius:12px;margin:20px 0;}
+        button{background:#e85080;color:#fff;border:none;padding:12px 25px;border-radius:50px;font-size:16px;}
+        .res{margin-top:25px;font-size:20px;font-weight:bold;color:#333;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>💗 交友盲盒</h2>
+        <p>扫码付款后抽取专属编号</p>
+        <img src="wx.png" class="qr">
+        <p>单次抽取 1元</p>
+        <button onclick="draw()">已付款，立即抽号</button>
+        <div class="res" id="resText"></div>
+    </div>
+
+    <script>
+        // 读取管理员上传的号码库
+        function getNumList(){
+            let d = localStorage.getItem("haoMaKu");
+            return d ? JSON.parse(d) : [];
+        }
+        // 随机抽号，抽完自动删除不重复
+        function draw(){
+            let list = getNumList();
+            if(list.length<=0){
+                resText.innerText = "暂无号码，管理员补充中";
+                return;
+            }
+            let r = Math.floor(Math.random()*list.length);
+            let num = list[r];
+            list.splice(r,1);
+            localStorage.setItem("haoMaKu",JSON.stringify(list));
+            resText.innerText = "🎉 你的盲盒号码："+num;
+        }
+    </script>
+</body>
+</html>

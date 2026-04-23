@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>号码管理后台</title>
+    <style>
+        body{padding:20px;}
+        textarea{width:100%;height:200px;padding:10px;}
+        button{background:#e85080;color:#fff;border:none;padding:10px 20px;margin:10px 10px 0 0;}
+    </style>
+</head>
+<body>
+    <h3>批量添加号码【一行一个】</h3>
+    <textarea id="txt" placeholder="A001
+A002
+10001
+10002"></textarea>
+    <div>
+        <button onclick="save()">保存号码库</button>
+        <button onclick="clearAll()">清空全部</button>
+    </div>
+
+    <script>
+        function save(){
+            let arr = txt.value.split("\n").filter(v=>v.trim());
+            localStorage.setItem("haoMaKu",JSON.stringify(arr));
+            alert("添加成功！用户可以抽取");
+        }
+        function clearAll(){
+            localStorage.removeItem("haoMaKu");
+            alert("已清空所有号码");
+        }
+    </script>
+</body>
+</html>
